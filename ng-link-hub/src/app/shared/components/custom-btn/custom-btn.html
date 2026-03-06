@@ -1,0 +1,14 @@
+<button class="btn-custom" 
+    [style.background-color]="backgroundColor()"
+    [style.color]="color()"
+    [style.width]="width()"
+    [style.border-color]="borderColor()"
+    [style.border-radius]="borderRadius()"
+    [style.border-width]="borderWidth()"
+    >
+  @if (isOnlyIcon()) {
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+  } @else {
+    <span [style.font-size]="fontSize()">{{ label() }}</span>
+  }
+</button>
