@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomInput } from './custom-input';
+import { SectionHeader } from './section-header';
 
-describe('CustomInput', () => {
-  let component: CustomInput;
-  let fixture: ComponentFixture<CustomInput>;
+describe('SectionHeader', () => {
+  let component: SectionHeader;
+  let fixture: ComponentFixture<SectionHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomInput]
+      imports: [SectionHeader]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CustomInput);
+    fixture = TestBed.createComponent(SectionHeader);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

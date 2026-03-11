@@ -1,0 +1,67 @@
+<main>
+  <h1>DEMOSTRACION DE COMPONENTES REUTILIZABLES</h1>
+  <section>
+    <h2>Mis botones customizables</h2>
+    <app-custom-btn
+      [isOnlyIcon]="true"
+      backgroundColor="#5B13EC"
+      color="black"
+      fontSize="15px"
+      width="10rem"
+      borderRadius="10px"
+      borderWidth="1px"
+      borderColor="red"
+    />
+    <br />
+    <app-custom-btn
+      [isOnlyIcon]="false"
+      label="LABEL DE BOTON"
+      backgroundColor="#FFF"
+      color="red"
+      fontSize="1rem"
+      width="5rem"
+      borderRadius="50px"
+      borderWidth="2px"
+      borderColor="green"
+    />
+  </section>
+  <section>
+    <h2>CONTAINERS INPUTS REUTILIZABLES</h2>
+    <app-container-custom-input
+      [existLabel]="true"
+      textLabel="Username"
+      colorLabel="blue"
+      fontsizeLabel="2rem"
+      [isWithIcon]="false"
+      [requeredInput]="true"
+      [disabledInput]="false"
+      [isVisibleMessage]="true"
+      typeMessage="sucess"
+      textMessage="Nombre de usuario correcto"
+    />
+    <app-container-custom-input
+      [existLabel]="true"
+      textLabel="email"
+      colorLabel="white"
+      fontsizeLabel="1rem"
+      [isWithIcon]="false"
+      [requeredInput]="true"
+      [disabledInput]="false"
+      [isVisibleMessage]="true"
+      typeMessage="error"
+      textMessage="Formato incorrecto del correo"
+    />
+    <app-container-custom-input
+      [existLabel]="true"
+      textLabel="password"
+      colorLabel="white"
+      fontsizeLabel="1rem"
+      typeInput="password"
+      [isWithIcon]="true"
+      directionIcon="L"
+      [requeredInput]="true"
+      [disabledInput]="false"
+      [isVisibleMessage]="false"
+    />
+  </section>
+</main>

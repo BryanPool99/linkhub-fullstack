@@ -1,0 +1,66 @@
+<section>
+  @if (existLabel()) {
+    <label 
+    [for]="idInput()" 
+    [style.color]="colorLabel()" 
+    [style.font-size]="fontsizeLabel()">
+      {{ textLabel() }}
+    </label>
+  }
+  <div>
+    @if (isWithIcon()) {
+      @switch (directionIcon()) {
+        @case ('R') {
+          <input
+            [id]="idInput()"
+            [type]="typeInput()"
+            [required]="requeredInput()"
+            [disabled]="disabledInput()"
+            [placeholder]="placeholderInput()"
+            [style.font-size]="fontSizeInput()"
+            [style.color]="colorTextInput()"
+          />
+
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="visibility"></mat-icon>
+        }
+        @case ('L') {
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="visibility"></mat-icon>
+
+          <input
+            [id]="idInput()"
+            [type]="typeInput()"
+            [placeholder]="placeholderInput()"
+            [style.font-size]="fontSizeInput()"
+            [style.color]="colorTextInput()"
+          />
+        }
+      }
+    } @else {
+      <input
+        [id]="idInput()"
+        [type]="typeInput()"
+        [required]="requeredInput()"
+        [disabled]="disabledInput()"
+        [placeholder]="placeholderInput()"
+        [style.font-size]="fontSizeInput()"
+        [style.color]="colorTextInput()"
+      />
+    }
+  </div>
+  @if (isVisibleMessage()) {
+    @switch (typeMessage()) {
+      @case ('sucess') {
+        <p>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
+          {{ textMessage() }}
+        </p>
+      }
+      @case ('error') {
+        <p>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
+          {{ textMessage() }}
+        </p>
+      }
+    }
+  }
+</section>

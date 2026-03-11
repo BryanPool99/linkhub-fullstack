@@ -1,0 +1,31 @@
+<header>
+  <mat-toolbar>
+    <!-- <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button> -->
+    <span>Mi logo</span>
+    <span class="example-spacer"></span>
+    <app-custom-btn
+      [isOnlyIcon]="false"
+      label="Login"
+      backgroundColor="#FFF"
+      color="red"
+      fontSize="1rem"
+      width="5rem"
+      borderRadius="50px"
+      borderWidth="2px"
+      borderColor="green"
+    />
+    <app-custom-btn
+      [isOnlyIcon]="false"
+      label="Sign Up Free"
+      backgroundColor="#5B13EC"
+      color="white"
+      fontSize="16px"
+      width="132px"
+      borderRadius="8px"
+      padding="10px 24px"
+      (onClick)="redirectToSignUp()"
+    />
+  </mat-toolbar>
+</header>

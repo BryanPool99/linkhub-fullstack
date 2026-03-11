@@ -1,10 +1,12 @@
-<button class="btn-custom" 
+<button class="btn-custom"
+    (click)="handleBtnClick()"
     [style.background-color]="backgroundColor()"
     [style.color]="color()"
     [style.width]="width()"
     [style.border-color]="borderColor()"
     [style.border-radius]="borderRadius()"
     [style.border-width]="borderWidth()"
+    [style.padding]="padding()"
     >
   @if (isOnlyIcon()) {
     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
