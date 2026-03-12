@@ -1,3 +1,19 @@
+@use '_variables.scss' as v;
+
 .example-spacer {
   flex: 1 1 auto;
+}
+
+header{
+  mat-toolbar{
+    background: v.$bg-primary;
+    height: auto;
+    padding: 16px;
+  }
+  .container-btn-auth{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }

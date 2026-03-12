@@ -1,4 +1,8 @@
 button.btn-custom{
     border: none;
     cursor: pointer;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }

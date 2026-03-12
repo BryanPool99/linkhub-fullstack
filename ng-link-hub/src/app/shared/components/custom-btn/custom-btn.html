@@ -1,15 +1,19 @@
-<button class="btn-custom"
-    (click)="handleBtnClick()"
-    [style.background-color]="backgroundColor()"
-    [style.color]="color()"
-    [style.width]="width()"
-    [style.border-color]="borderColor()"
-    [style.border-radius]="borderRadius()"
-    [style.border-width]="borderWidth()"
-    [style.padding]="padding()"
-    >
+<button
+  class="btn-custom"
+  (click)="handleBtnClick()"
+  [style.background-color]="backgroundColor()"
+  [style.color]="color()"
+  [style.width]="width()"
+  [style.border-color]="borderColor()"
+  [style.border-radius]="borderRadius()"
+  [style.border-width]="borderWidth()"
+  [style.padding]="padding()"
+>
   @if (isOnlyIcon()) {
-    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+    <ng-icon [name]="iconSrc()" />
+  } @else if (iconSrc()) {
+    <ng-icon [name]="iconSrc()" />
+    <span [style.font-size]="fontSize()">{{ label() }}</span>
   } @else {
     <span [style.font-size]="fontSize()">{{ label() }}</span>
   }

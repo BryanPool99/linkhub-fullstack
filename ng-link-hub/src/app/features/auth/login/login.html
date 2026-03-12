@@ -1,1 +1,85 @@
-<p>login works!</p>
+<section>
+  <div class="box-login">
+    <div class="container-title-description">
+      <h1>Welcome back</h1>
+      <p>Log in to your account to manage your links</p>
+    </div>
+    <div class="container-action-login">
+      <div class="box-btn-login-social">
+        <app-custom-btn
+          [isOnlyIcon]="false"
+          iconSrc="ionLogoGoogle"
+          label="Continue with Google"
+          backgroundColor="var(--bg-btn-primary-05)"
+          color="#FFF"
+          fontSize=""
+          width="480px"
+          borderRadius="8px"
+          padding="10px"
+          borderWidth="2px"
+          borderColor="var(--bg-btn-primary-22)"
+          (onClick)="loginWithGoogle()"
+        />
+        <app-custom-btn
+          [isOnlyIcon]="false"
+          iconSrc="ionLogoGithub"
+          label="Continue with Github"
+          backgroundColor="var(--bg-btn-primary-05)"
+          color="#FFF"
+          fontSize=""
+          width="480px"
+          borderRadius="8px"
+          padding="10px"
+          borderWidth="2px"
+          borderColor="var(--bg-btn-primary-22)"
+          (onClick)="loginWithGithub()"
+        />
+      </div>
+      <div class="box-separator">
+        <hr />
+        <p>OR</p>
+        <hr />
+      </div>
+      <form class="form-login">
+        <app-container-custom-input
+          [existLabel]="true"
+          textLabel="Email Address"
+          colorLabel="#FFF"
+          idInput="email"
+          placeholderInput="name@company.com"
+          [isVisibleMessage]="false"
+          [isWithIcon]="false"
+          [disabledInput]="false"
+          [requeredInput]="true"
+        />
+        <app-container-custom-input
+          [existLabel]="true"
+          textLabel="Password"
+          colorLabel="#FFF"
+          typeInput="password"
+          idInput="password"
+          [isVisibleMessage]="false"
+          [isWithIcon]="true"
+          directionIcon="R"
+          [disabledInput]="false"
+          [requeredInput]="true"
+        />
+        <app-custom-btn 
+            [isOnlyIcon]="false" 
+            label="Log in" 
+            backgroundColor="#5B13EC"
+            color="#FFF"
+            fontSize=""
+            width="100%"
+            borderRadius="8px"
+            borderColor="transparent"
+            padding="12px"
+            (onClick)="loginWithCredentials()"
+            />
+      </form>
+    </div>
+    <div class="container-redirect-register">
+        <p>Don't have an account?<a routerLink="/auth/register"> Create one for free</a></p>
+    </div>
+  </div>
+</section>

@@ -1,8 +1,9 @@
 import { Component, input, output } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
+import { NgIcon } from '@ng-icons/core';
 @Component({
   selector: 'app-custom-btn',
-  imports: [MatIconModule],
+  imports: [MatIconModule,NgIcon],
   templateUrl: './custom-btn.html',
   styleUrl: './custom-btn.scss',
 })
