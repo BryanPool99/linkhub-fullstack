@@ -13,6 +13,8 @@ import { RouterLink } from '@angular/router';
 })
 export class Login {
 
+  typeInput = 'password';
+
   loginWithGoogle() {
     console.log('login with google');
     alert('login with google');
@@ -26,5 +28,9 @@ export class Login {
   loginWithCredentials() {
     console.log('login with credentials');
     alert('login with credentials');
+  }
+
+  onPasswordVisibilityChange(isVisible: boolean) {
+    this.typeInput = isVisible ? 'text' : 'password';
   }
 }

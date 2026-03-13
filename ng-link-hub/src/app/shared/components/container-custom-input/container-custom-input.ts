@@ -1,18 +1,23 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-container-custom-input',
-  imports: [MatIconModule],
+  imports: [MatIconModule, RouterLink],
   templateUrl: './container-custom-input.html',
   styleUrl: './container-custom-input.scss',
 })
 export class ContainerCustomInput {
   //propiedades del label
   existLabel = input.required<boolean>();
+  containLink = input.required<boolean>();
+  textLink = input<string>('');
+  routerLinkProp = input<string>('');
   textLabel = input<string>('');
   colorLabel = input<string>('');
   fontsizeLabel = input<string>('');
+  typeSeccion = input<string>('');
   //propiedades del p-message
   isVisibleMessage = input.required<boolean>();
   typeMessage = input<string>();
@@ -27,4 +32,16 @@ export class ContainerCustomInput {
   directionIcon = input<string>('');
   disabledInput = input.required<boolean>();
   requeredInput = input.required<boolean>();
+
+
+  isPasswordVisible = signal<boolean>(false);
+  typeInputSignal = signal<string>('password');
+
+  passwordVisibilityChange = output<boolean>();
+
+  togglePasswordVisibility() {
+    const newVisibility = !this.isPasswordVisible();
+    this.isPasswordVisible.set(newVisibility);
+    this.passwordVisibilityChange.emit(newVisibility);
+  }
 }

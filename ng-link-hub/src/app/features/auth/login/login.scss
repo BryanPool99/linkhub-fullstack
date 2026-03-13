@@ -1,11 +1,9 @@
 @use '_variables' as v;
 section{
-    border: 2px solid white;/*tmp*/
     display: flex;
     align-items: center;
     justify-content: center;
     .box-login{
-        //border: 2px solid red;/*tmp*/
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -26,13 +24,15 @@ section{
             }
         }
         .container-action-login{
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             .box-btn-login-social{
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
             }
             .box-separator{
-                border: 2px solid red;/*tmp*/
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -40,6 +40,11 @@ section{
                 hr{
                     width: 90%;
                 }
+            }
+            form.form-login{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
             }
         }
     }

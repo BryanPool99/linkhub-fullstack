@@ -1,14 +1,17 @@
 /*variables de colores*/
-$text-primary:#94A3B8;
-$text-secondary:#FFFFFF;
-$border-input:#334155;
-$bg-input:#1E293B;
-$bg-primary:#161022;
-$bg-btn-primary:#5B13EC;
-$text-link:#5B13EC;
-$text-message:#5B13EC;
-$text-label:#CBD5E1;
-$text-btn-login:#E2E8F0;
-$bg-container-auth-primary:#0F172A;
-$border-container-auth-primary:#5B13EC;
-
+$text-primary: #94a3b8;
+$text-secondary: #ffffff;
+$border-input: #334155;
+$bg-input: #1e293b;
+$color-text-input: #64748b;
+$bg-primary: #161022;
+$bg-btn-primary: #5b13ec;
+$bg-btn-primary-05: rgba($bg-btn-primary, 0.05);
+$bg-btn-primary-30: rgba($bg-btn-primary, 0.3);
+$text-link: #5b13ec;
+$text-message: #5b13ec;
+$text-label: #cbd5e1;
+$text-label-login: #e2e8f0;
+$text-btn-login: #e2e8f0;
+$bg-container-auth-primary: #0f172a;
+$border-container-auth-primary: #5b13ec;

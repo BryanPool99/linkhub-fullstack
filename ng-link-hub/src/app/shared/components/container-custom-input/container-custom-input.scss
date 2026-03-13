@@ -1,0 +1,71 @@
+@use '_variables.scss' as v;
+
+section.container-group-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  .container-label-ancor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; // 1. Crea un contexto de posicionamiento
+
+    label {
+      position: relative; // 2. Asegura que el label tenga prioridad
+      z-index: 2;
+      cursor: pointer; // Para que el usuario sepa que es clickable
+
+      &.label-login {
+        color: v.$text-label-login;
+      }
+      &.label-register {
+        color: v.$text-label;
+      }
+    }
+
+    a {
+        position: relative; // 3. Baja la prioridad del link
+        z-index: 1;
+        width: fit-content; // 4. Que solo ocupe su texto
+        color: v.$text-link;
+        text-decoration: none;
+        
+        // Evita que el link se estire si hay espacio extra
+        display: inline-block; 
+        line-height: normal; 
+    }
+ }
+
+  .box-input-icon {
+    border: 2px solid v.$bg-btn-primary-30;
+    border-radius: 8px;
+    background: v.$bg-btn-primary-05;
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+    input {
+      background: transparent;
+      border: none;
+      flex: 1;
+      &:focus-visible {
+        outline: none;
+        border: none;
+      }
+      &.input-login {
+        color: v.$color-text-input;
+      }
+      &.input-register {
+        color: green;
+      }
+    }
+    mat-icon {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+  }
+}

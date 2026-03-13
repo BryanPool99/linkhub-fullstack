@@ -1,13 +1,23 @@
-<section>
-  @if (existLabel()) {
-    <label 
-    [for]="idInput()" 
-    [style.color]="colorLabel()" 
-    [style.font-size]="fontsizeLabel()">
-      {{ textLabel() }}
-    </label>
-  }
-  <div>
+<section class="container-group-input">
+  <div class="container-label-ancor">
+    @if (existLabel()) {
+      <label
+        class="label"
+        (click)="$event.stopPropagation()"
+        [for]="idInput()"
+        [style.color]="colorLabel()"
+        [style.font-size]="fontsizeLabel()"
+        [class.label-login]="typeSeccion() === 'login'"
+        [class.label-register]="typeSeccion() === 'register'"
+      >
+        {{ textLabel() }}
+      </label>
+    }
+    @if (containLink()) {
+      <a [routerLink]="routerLinkProp()">{{ textLink() }}</a>
+    }
+  </div>
+  <div class="box-input-icon">
     @if (isWithIcon()) {
       @switch (directionIcon()) {
         @case ('R') {
@@ -19,12 +29,23 @@
             [placeholder]="placeholderInput()"
             [style.font-size]="fontSizeInput()"
             [style.color]="colorTextInput()"
+            [class.input-login]="typeSeccion() === 'login'"
+            [class.input-register]="typeSeccion() === 'register'"
           />
-
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="visibility"></mat-icon>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            [fontIcon]="isPasswordVisible() ? 'visibility_off' : 'visibility'"
+            (click)="togglePasswordVisibility()"
+          ></mat-icon>
         }
         @case ('L') {
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="visibility"></mat-icon>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            [fontIcon]="isPasswordVisible() ? 'visibility_off' : 'visibility'"
+            (click)="togglePasswordVisibility()"
+          ></mat-icon>
 
           <input
             [id]="idInput()"
@@ -32,6 +53,8 @@
             [placeholder]="placeholderInput()"
             [style.font-size]="fontSizeInput()"
             [style.color]="colorTextInput()"
+            [class.input-login]="typeSeccion() === 'login'"
+            [class.input-register]="typeSeccion() === 'register'"
           />
         }
       }
@@ -44,23 +67,35 @@
         [placeholder]="placeholderInput()"
         [style.font-size]="fontSizeInput()"
         [style.color]="colorTextInput()"
+        [class.input-login]="typeSeccion() === 'login'"
+        [class.input-register]="typeSeccion() === 'register'"
       />
     }
   </div>
   @if (isVisibleMessage()) {
-    @switch (typeMessage()) {
-      @case ('sucess') {
-        <p>
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check"></mat-icon>
-          {{ textMessage() }}
-        </p>
+    <div class="box-message">
+      @switch (typeMessage()) {
+        @case ('sucess') {
+          <p class="sucess">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="check"
+            ></mat-icon>
+            {{ textMessage() }}
+          </p>
+        }
+        @case ('error') {
+          <p class="error">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="error"
+            ></mat-icon>
+            {{ textMessage() }}
+          </p>
+        }
       }
-      @case ('error') {
-        <p>
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
-          {{ textMessage() }}
-        </p>
-      }
-    }
+    </div>
   }
 </section>

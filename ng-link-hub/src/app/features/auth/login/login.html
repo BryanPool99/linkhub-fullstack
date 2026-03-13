@@ -43,8 +43,9 @@
       <form class="form-login">
         <app-container-custom-input
           [existLabel]="true"
+          [containLink]="false"
           textLabel="Email Address"
-          colorLabel="#FFF"
+          typeSeccion="login"
           idInput="email"
           placeholderInput="name@company.com"
           [isVisibleMessage]="false"
@@ -54,9 +55,13 @@
         />
         <app-container-custom-input
           [existLabel]="true"
+          [containLink]="true"
+          routerLinkProp="/auth/forget-password"
+          textLink="Forgot password?"
           textLabel="Password"
-          colorLabel="#FFF"
-          typeInput="password"
+          [typeInput]="typeInput"
+          (passwordVisibilityChange)="onPasswordVisibilityChange($event)"
+          typeSeccion="login"
           idInput="password"
           [isVisibleMessage]="false"
           [isWithIcon]="true"
