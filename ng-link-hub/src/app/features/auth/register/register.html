@@ -1,1 +1,103 @@
-<p>register works!</p>
+<section class="container-register">
+  <div class="box-register">
+    <header>
+      <h1>Join the community</h1>
+      <p>Create your unique profile link and start sharing.</p>
+    </header>
+    <form class="form-register">
+      <app-container-custom-input
+        [existLabel]="true"
+        textLabel="Username"
+        typeSeccion="register"
+        typeInput="text"
+        idInput="usernameRegister"
+        placeholderInput="linksync.com/yourname"
+        [isVisibleMessage]="false"
+        [isWithIcon]="false"
+        [disabledInput]="false"
+        [requiredInput]="true"
+      />
+      <app-container-custom-input
+        [existLabel]="true"
+        [containLink]="false"
+        textLabel="Email Address"
+        typeSeccion="register"
+        typeInput="email"
+        idInput="emailRegister"
+        placeholderInput="name@example.com"
+        [isVisibleMessage]="false"
+        [isWithIcon]="false"
+        [disabledInput]="false"
+        [requiredInput]="true"
+      />
+      <app-container-custom-input
+        [existLabel]="true"
+        textLabel="Password"
+        [typeInput]="typeInput"
+        (passwordVisibilityChange)="onPasswordVisibilityChange($event)"
+        typeSeccion="register"
+        idInput="passwordRegister"
+        [isVisibleMessage]="false"
+        [isWithIcon]="true"
+        directionIcon="R"
+        [disabledInput]="false"
+        [requiredInput]="true"
+      />
+      <p class="text-terms">
+        By clicking "Create Account", you agree to our <a href="#">Terms of Service</a> and
+        <a href="#">Privacy Policy</a>.
+      </p>
+      <app-custom-btn
+        [isOnlyIcon]="false"
+        backgroundColor="var(--bg-btn-primary)"
+        color="#FFF"
+        label="Create Account"
+        iconSrc="ionArrowForward"
+        directionIcon="right"
+        fontSize="16px"
+        width="100%"
+        borderRadius="8px"
+        padding="16px 24px"
+        borderWidth="0px"
+      />
+    </form>
+    <div class="box-social-signup">
+      <div class="box-separator">
+        <hr />
+        <p>Or continue with</p>
+        <hr />
+      </div>
+      <div class="box-btns-signup">
+        <app-custom-btn
+          [isOnlyIcon]="false"
+          iconSrc="ionLogoGoogle"
+          label="Continue with Google"
+          backgroundColor="transparent"
+          color="#FFF"
+          width="100%"
+          borderRadius="8px"
+          fontSize=""
+          padding="10px"
+          borderWidth="1px"
+          borderColor="#334155"
+          (onClick)="registerWithGoogle()"
+        />
+        <app-custom-btn
+          [isOnlyIcon]="false"
+          iconSrc="ionLogoGithub"
+          label="Continue with Github"
+          backgroundColor="transparent"
+          color="#FFF"
+          fontSize=""
+          width="100%"
+          borderRadius="8px"
+          padding="10px"
+          borderWidth="1px"
+          borderColor="#334155"
+          (onClick)="registerWithGithub()"
+        />
+      </div>
+    </div>
+    <p class="text-redirect-login">Already have an account? <a routerLink="/auth/login">Log in</a></p>
+  </div>
+</section>

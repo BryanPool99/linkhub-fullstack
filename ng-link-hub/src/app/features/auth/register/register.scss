@@ -1,0 +1,93 @@
+@use '_variables' as v;
+
+section.container-register {
+  display: flex;
+  justify-content: center;
+
+  .box-register {
+    max-width: 70vw;
+    background: v.$bg-container-auth-primary-50;
+    border-radius: 8px;
+    padding: 32px;
+    border: 1px solid v.$bg-btn-primary-10;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+
+      h1 {
+        font-size: 30px;
+        color: v.$text-secondary;
+      }
+
+      p {
+        font-size: 16px;
+        color: v.$text-primary;
+      }
+    }
+
+    form.form-register {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      p.text-terms {
+        font-size: 12px;
+        color: v.$text-primary;
+
+        a {
+          color: v.$text-link;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .box-social-signup {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .box-separator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+
+        hr {
+          width: 25%;
+        }
+
+        p {
+          color: v.$text-primary;
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+      }
+
+      .box-btns-signup {
+        display: flex;
+        gap: 16px;
+
+        app-custom-btn {
+          flex: 1;
+        }
+      }
+    }
+    
+    p.text-redirect-login {
+      text-align: center;
+      font-size: 14px;
+      color: v.$text-primary;
+      a {
+        color: v.$text-link;
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -8,6 +8,8 @@
   [style.border-radius]="borderRadius()"
   [style.border-width]="borderWidth()"
   [style.padding]="padding()"
+  [class.direction-left]="directionIcon() === 'left'"
+  [class.direction-right]="directionIcon() === 'right'"
 >
   @if (isOnlyIcon()) {
     <ng-icon [name]="iconSrc()" />

@@ -17,14 +17,18 @@
       <a [routerLink]="routerLinkProp()">{{ textLink() }}</a>
     }
   </div>
-  <div class="box-input-icon">
+  <div
+    class="box-input-icon"
+    [class.login]="typeSeccion() === 'login'"
+    [class.register]="typeSeccion() === 'register'"
+  >
     @if (isWithIcon()) {
       @switch (directionIcon()) {
         @case ('R') {
           <input
             [id]="idInput()"
             [type]="typeInput()"
-            [required]="requeredInput()"
+            [required]="requiredInput()"
             [disabled]="disabledInput()"
             [placeholder]="placeholderInput()"
             [style.font-size]="fontSizeInput()"
@@ -62,7 +66,7 @@
       <input
         [id]="idInput()"
         [type]="typeInput()"
-        [required]="requeredInput()"
+        [required]="requiredInput()"
         [disabled]="disabledInput()"
         [placeholder]="placeholderInput()"
         [style.font-size]="fontSizeInput()"

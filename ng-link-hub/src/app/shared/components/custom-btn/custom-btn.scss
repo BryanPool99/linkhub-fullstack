@@ -1,8 +1,20 @@
-button.btn-custom{
-    border: none;
-    cursor: pointer;
-    border-style: solid;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
+button.btn-custom {
+  border: none;
+  cursor: pointer;
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  &.direction-left {
+    flex-direction: row;
+  }
+  &.direction-right {
+    flex-direction: row-reverse;
+  }
+
+  ng-icon{
+    width: 16px;
+    height: 16px;
+  }
 }

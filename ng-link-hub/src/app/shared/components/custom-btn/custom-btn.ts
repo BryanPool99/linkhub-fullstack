@@ -11,6 +11,7 @@ export class CustomBtn {
   isOnlyIcon = input.required<boolean>();
   //si solo ira icono
   iconSrc = input<string>('');
+  directionIcon = input<string>('');
   //si ira texto
   label = input<string>('');
   backgroundColor = input.required<string>();

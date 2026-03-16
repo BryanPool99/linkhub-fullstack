@@ -8,12 +8,11 @@ section.container-group-input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative; // 1. Crea un contexto de posicionamiento
+    position: relative;
 
     label {
-      position: relative; // 2. Asegura que el label tenga prioridad
+      position: relative;
       z-index: 2;
-      cursor: pointer; // Para que el usuario sepa que es clickable
 
       &.label-login {
         color: v.$text-label-login;
@@ -24,13 +23,11 @@ section.container-group-input {
     }
 
     a {
-        position: relative; // 3. Baja la prioridad del link
+        position: relative; 
         z-index: 1;
-        width: fit-content; // 4. Que solo ocupe su texto
+        width: fit-content;
         color: v.$text-link;
         text-decoration: none;
-        
-        // Evita que el link se estire si hay espacio extra
         display: inline-block; 
         line-height: normal; 
     }
@@ -43,6 +40,14 @@ section.container-group-input {
     padding: 16px;
     display: flex;
     gap: 8px;
+    &.login{
+      background: v.$bg-btn-primary-05;
+      border: 1px solid v.$bg-btn-primary-30;
+    }
+    &.register{
+      background: v.$bg-input-50;
+      border:1px solid v.$border-input;
+    }
     input {
       background: transparent;
       border: none;
@@ -55,7 +60,7 @@ section.container-group-input {
         color: v.$color-text-input;
       }
       &.input-register {
-        color: green;
+        color: v.$text-primary;
       }
     }
     mat-icon {

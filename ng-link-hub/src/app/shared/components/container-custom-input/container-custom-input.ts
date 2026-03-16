@@ -11,7 +11,7 @@ import { RouterLink } from "@angular/router";
 export class ContainerCustomInput {
   //propiedades del label
   existLabel = input.required<boolean>();
-  containLink = input.required<boolean>();
+  containLink = input<boolean>(false);
   textLink = input<string>('');
   routerLinkProp = input<string>('');
   textLabel = input<string>('');
@@ -31,7 +31,7 @@ export class ContainerCustomInput {
   isWithIcon = input.required<boolean>();
   directionIcon = input<string>('');
   disabledInput = input.required<boolean>();
-  requeredInput = input.required<boolean>();
+  requiredInput = input.required<boolean>();
 
 
   isPasswordVisible = signal<boolean>(false);
