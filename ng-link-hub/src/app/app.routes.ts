@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
+        canActivate: [authGuard],//protege la ruta admin
         children: [
             {
                 path: '',redirectTo: 'dashboard', pathMatch: 'full'

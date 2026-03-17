@@ -40,8 +40,8 @@
         <p>OR</p>
         <hr />
       </div>
-      <form class="form-login">
-        <app-container-custom-input
+      <form class="form-login" [formGroup]="loginForm">
+        <!-- <app-container-custom-input
           [existLabel]="true"
           [containLink]="false"
           textLabel="Email Address"
@@ -52,6 +52,19 @@
           [isWithIcon]="false"
           [disabledInput]="false"
           [requiredInput]="true"
+        /> -->
+        <app-container-custom-input
+          [existLabel]="true"
+          [containLink]="false"
+          textLabel="Username"
+          typeSeccion="login"
+          idInput="usernameLogin"
+          placeholderInput="username"
+          [isVisibleMessage]="false"
+          [isWithIcon]="false"
+          [disabledInput]="false"
+          [requiredInput]="true"
+          (valueChange)="loginForm.get('usernameLogin')?.setValue($event)"
         />
         <app-container-custom-input
           [existLabel]="true"
@@ -62,12 +75,13 @@
           [typeInput]="typeInput"
           (passwordVisibilityChange)="onPasswordVisibilityChange($event)"
           typeSeccion="login"
-          idInput="password"
+          idInput="passwordLogin"
           [isVisibleMessage]="false"
           [isWithIcon]="true"
           directionIcon="R"
           [disabledInput]="false"
           [requiredInput]="true"
+          (valueChange)="loginForm.get('passwordLogin')?.setValue($event)"
         />
         <app-custom-btn 
             [isOnlyIcon]="false" 

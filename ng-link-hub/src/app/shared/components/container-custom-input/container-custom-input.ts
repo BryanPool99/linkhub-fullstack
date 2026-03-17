@@ -39,9 +39,16 @@ export class ContainerCustomInput {
 
   passwordVisibilityChange = output<boolean>();
 
+  valueChange = output<string>();
+
   togglePasswordVisibility() {
     const newVisibility = !this.isPasswordVisible();
     this.isPasswordVisible.set(newVisibility);
     this.passwordVisibilityChange.emit(newVisibility);
+  }
+
+  onInputChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.valueChange.emit(inputElement.value);
   }
 }
