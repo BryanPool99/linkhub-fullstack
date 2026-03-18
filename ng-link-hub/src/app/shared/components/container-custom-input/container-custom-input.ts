@@ -20,7 +20,7 @@ export class ContainerCustomInput {
   typeSeccion = input<string>('');
   //propiedades del p-message
   isVisibleMessage = input.required<boolean>();
-  typeMessage = input<string>();
+  typeMessage = input<string>('error');
   textMessage = input<string>();
   //propiedades del input
   typeInput = input<string>('text');
@@ -32,10 +32,12 @@ export class ContainerCustomInput {
   directionIcon = input<string>('');
   disabledInput = input.required<boolean>();
   requiredInput = input.required<boolean>();
-
+  controlInvalid = input<boolean>(false);
+  controlTouched = input<boolean>(false);
 
   isPasswordVisible = signal<boolean>(false);
   typeInputSignal = signal<string>('password');
+  
 
   passwordVisibilityChange = output<boolean>();
 

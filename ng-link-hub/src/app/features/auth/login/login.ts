@@ -4,7 +4,7 @@ import { provideIcons } from '@ng-icons/core';
 import { ionLogoGoogle, ionLogoGithub } from '@ng-icons/ionicons';
 import { ContainerCustomInput } from "../../../shared/components/container-custom-input/container-custom-input";
 import { Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { AuthRequestDto } from '../../../shared/interfaces/auth.interface';
 @Component({
@@ -25,9 +25,23 @@ export class Login {
   _fb = inject(FormBuilder);
   constructor() {
     this.loginForm = this._fb.group({
-      usernameLogin: [''],
-      passwordLogin: [''],
+      usernameLogin: ['', Validators.required],
+      passwordLogin: ['',[Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.loginForm.get(controlName);
+
+    if (control?.hasError('required')) {
+      return 'Este campo es obligatorio';
+    }
+
+    if (control?.hasError('minlength')) {
+      return 'Es demasiado corto,como minimo 6 caracteres';
+    }
+
+    return ''; // Si no hay errores
   }
 
   loginWithGoogle() {

@@ -24,11 +24,15 @@ export class CustomBtn {
   borderWidth = input<string>('');
   borderColor = input<string>('');
 
+  disabled = input<boolean>(false);
+
   padding = input<string>();
   //ouptuts
   onClick = output<void>();
   //metodos
-  handleBtnClick(){
+  handleBtnClick() {
+  if (!this.disabled()) {
     this.onClick.emit();
   }
+}
 }

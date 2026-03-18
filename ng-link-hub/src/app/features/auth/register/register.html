@@ -4,7 +4,7 @@
       <h1>Join the community</h1>
       <p>Create your unique profile link and start sharing.</p>
     </header>
-    <form class="form-register">
+    <form class="form-register" [formGroup]="registerForm">
       <app-container-custom-input
         [existLabel]="true"
         textLabel="Username"
@@ -16,6 +16,13 @@
         [isWithIcon]="false"
         [disabledInput]="false"
         [requiredInput]="true"
+        (valueChange)="
+          registerForm.get('usernameRegister')?.setValue($event);
+          registerForm.get('usernameRegister')?.markAsTouched()
+        "
+        [controlInvalid]="registerForm.get('usernameRegister')?.invalid || false"
+        [controlTouched]="registerForm.get('usernameRegister')?.touched || false"
+        [textMessage]="getErrorMessage('usernameRegister')"
       />
       <app-container-custom-input
         [existLabel]="true"
@@ -29,6 +36,13 @@
         [isWithIcon]="false"
         [disabledInput]="false"
         [requiredInput]="true"
+        (valueChange)="
+          registerForm.get('emailRegister')?.setValue($event);
+          registerForm.get('emailRegister')?.markAsTouched()
+        "
+        [controlInvalid]="registerForm.get('emailRegister')?.invalid || false"
+        [controlTouched]="registerForm.get('emailRegister')?.touched || false"
+        [textMessage]="getErrorMessage('emailRegister')"
       />
       <app-container-custom-input
         [existLabel]="true"
@@ -42,12 +56,20 @@
         directionIcon="R"
         [disabledInput]="false"
         [requiredInput]="true"
+        (valueChange)="
+          registerForm.get('passwordRegister')?.setValue($event);
+          registerForm.get('passwordRegister')?.markAsTouched()
+        "
+        [controlInvalid]="registerForm.get('passwordRegister')?.invalid || false"
+        [controlTouched]="registerForm.get('passwordRegister')?.touched || false"
+        [textMessage]="getErrorMessage('passwordRegister')"
       />
       <p class="text-terms">
         By clicking "Create Account", you agree to our <a href="#">Terms of Service</a> and
         <a href="#">Privacy Policy</a>.
       </p>
       <app-custom-btn
+        [disabled]="registerForm.invalid"
         [isOnlyIcon]="false"
         backgroundColor="var(--bg-btn-primary)"
         color="#FFF"
@@ -59,6 +81,7 @@
         borderRadius="8px"
         padding="16px 24px"
         borderWidth="0px"
+        (onClick)="registerWithCredentials()"
       />
     </form>
     <div class="box-social-signup">
@@ -98,6 +121,8 @@
         />
       </div>
     </div>
-    <p class="text-redirect-login">Already have an account? <a routerLink="/auth/login">Log in</a></p>
+    <p class="text-redirect-login">
+      Already have an account? <a routerLink="/auth/login">Log in</a>
+    </p>
   </div>
 </section>

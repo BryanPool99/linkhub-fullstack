@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AuthRequestDto, TokenResponseDto } from '../../shared/interfaces/auth.interface';
+import { AuthRequestDto, TokenResponseDto, UserRegisterRequestDto } from '../../shared/interfaces/auth.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,5 +14,9 @@ export class AuthService {
 
   login(authRequest:AuthRequestDto):Observable<TokenResponseDto>{
     return this._httpClient.post<TokenResponseDto>(`${this.apiUrlAuthBase}/login`, authRequest);
+  }
+
+  registerUser( registerRequest:UserRegisterRequestDto):Observable<TokenResponseDto>{
+    return this._httpClient.post<TokenResponseDto>(`${this.apiUrlAuthBase}/register`, registerRequest);
   }
 }

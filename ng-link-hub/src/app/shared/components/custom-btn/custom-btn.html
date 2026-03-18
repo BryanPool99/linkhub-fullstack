@@ -8,6 +8,7 @@
   [style.border-radius]="borderRadius()"
   [style.border-width]="borderWidth()"
   [style.padding]="padding()"
+  [style.cursor]="disabled() ? 'not-allowed' : 'pointer'"
   [class.direction-left]="directionIcon() === 'left'"
   [class.direction-right]="directionIcon() === 'right'"
 >

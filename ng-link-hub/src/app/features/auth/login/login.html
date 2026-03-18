@@ -64,7 +64,13 @@
           [isWithIcon]="false"
           [disabledInput]="false"
           [requiredInput]="true"
-          (valueChange)="loginForm.get('usernameLogin')?.setValue($event)"
+          (valueChange)="
+            loginForm.get('usernameLogin')?.setValue($event);
+            loginForm.get('usernameLogin')?.markAsTouched()
+          "
+          [controlInvalid]="loginForm.get('usernameLogin')?.invalid || false"
+          [controlTouched]="loginForm.get('usernameLogin')?.touched || false"
+          [textMessage]="getErrorMessage('usernameLogin')"
         />
         <app-container-custom-input
           [existLabel]="true"
@@ -81,24 +87,31 @@
           directionIcon="R"
           [disabledInput]="false"
           [requiredInput]="true"
-          (valueChange)="loginForm.get('passwordLogin')?.setValue($event)"
+          (valueChange)="
+            loginForm.get('passwordLogin')?.setValue($event);
+            loginForm.get('passwordLogin')?.markAsTouched()
+          "
+          [controlInvalid]="loginForm.get('passwordLogin')?.invalid || false"
+          [controlTouched]="loginForm.get('passwordLogin')?.touched || false"
+          [textMessage]="getErrorMessage('passwordLogin')"
         />
-        <app-custom-btn 
-            [isOnlyIcon]="false" 
-            label="Log in" 
-            backgroundColor="#5B13EC"
-            color="#FFF"
-            fontSize=""
-            width="100%"
-            borderRadius="8px"
-            borderColor="transparent"
-            padding="12px"
-            (onClick)="loginWithCredentials()"
-            />
+        <app-custom-btn
+          [disabled]="loginForm.invalid"
+          [isOnlyIcon]="false"
+          label="Log in"
+          backgroundColor="#5B13EC"
+          color="#FFF"
+          fontSize=""
+          width="100%"
+          borderRadius="8px"
+          borderColor="transparent"
+          padding="12px"
+          (onClick)="loginWithCredentials()"
+        />
       </form>
     </div>
     <div class="container-redirect-register">
-        <p>Don't have an account?<a routerLink="/auth/register"> Create one for free</a></p>
+      <p>Don't have an account?<a routerLink="/auth/register"> Create one for free</a></p>
     </div>
   </div>
 </section>

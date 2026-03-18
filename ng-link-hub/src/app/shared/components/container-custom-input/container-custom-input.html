@@ -79,7 +79,7 @@
       />
     }
   </div>
-  @if (isVisibleMessage()) {
+  @if (controlInvalid() && controlTouched()) {
     <div class="box-message">
       @switch (typeMessage()) {
         @case ('sucess') {
