@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
                         .pathMatchers("/public/**").permitAll()
                         .pathMatchers("/auth/**").permitAll()
+                        //.pathMatchers("/admin/link/findAll").permitAll()
                         .anyExchange().authenticated()
                 )
                 .addFilterAt(jwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)

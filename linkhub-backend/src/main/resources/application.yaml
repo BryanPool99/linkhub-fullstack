@@ -3,9 +3,9 @@ spring:
     name: linkhub
     security:
       secret-key: "91a7915f17ecb7b4f10a1b73f0dca7d2c529bd45c55c6699dcd420be4fbec4cc"
-      expiration: 60000
+      expiration: 3600000
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/postgres
+    url: r2dbc:postgresql://localhost:5432/postgres?schema=linkhub
     username: postgres
     password: root
     #para ver las consultas en consola
