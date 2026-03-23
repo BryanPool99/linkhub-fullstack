@@ -2,15 +2,18 @@ package com.bryandev.linkhub.service.impl;
 
 import com.bryandev.linkhub.mapper.LinkMapper;
 import com.bryandev.linkhub.model.dto.request.CreateLinkRequestDto;
+import com.bryandev.linkhub.model.dto.request.UpdateLinkRequestDto;
 import com.bryandev.linkhub.model.dto.response.CreateLinkResponseDto;
 import com.bryandev.linkhub.model.dto.response.GenericResponseDto;
 import com.bryandev.linkhub.model.dto.response.LinkDto;
+import com.bryandev.linkhub.model.dto.response.UpdateLinkResponseDto;
 import com.bryandev.linkhub.model.entitIes.LinkEntity;
 import com.bryandev.linkhub.repository.LinkRepository;
 import com.bryandev.linkhub.repository.UserRepository;
 import com.bryandev.linkhub.security.JwtProvider;
 import com.bryandev.linkhub.service.LinkService;
 import com.bryandev.linkhub.util.ApiResponse;
+import com.bryandev.linkhub.util.LinkIconResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service//para el contexto de spring
 @RequiredArgsConstructor//para hacer inyeccion de dependencia por constructor
@@ -55,12 +59,14 @@ public class LinkServiceImpl implements LinkService {
                 linkRepository.countTotalLinksByUsername(username),
                 userRepository.findByUsername(username)
         ).flatMap(tuple2 -> {
+            String typeIconFromEnum = LinkIconResolver.resolveIcon(requestDto.getUrl());
+            log.info("El typeIconFromEnum es: {}", typeIconFromEnum);
             var newLinkEntity = LinkEntity.builder()
-                    //.id()
+                    //.id()//ESTO NO SE COLOCA YA QUE ES AUTOINCREMENTABLE EN LA BD
                     .userId(tuple2.getT2().getId())
                     .title(requestDto.getTitle())
                     .url(requestDto.getUrl())
-                    //.typeIcon() falta este atributo
+                    .typeIcon(typeIconFromEnum)
                     .position(tuple2.getT1() + 1)
                     .isActive(requestDto.getIsActive())
                     .createdAt(LocalDateTime.now())
@@ -72,22 +78,6 @@ public class LinkServiceImpl implements LinkService {
                     ));
         }).doOnSuccess((v) ->
                 log.info("Se creo el link correctamente con el id:{}", v.getData().getId()));
-        /*
-        return linkRepository.countTotalLinksByUsername(username)
-                .flatMap(totalLinks -> {
-                    var newLinkEntity = LinkEntity.builder()
-                            //.id()
-                            //.userId()//se necesita el id del usuario mediante el username
-                            .title(requestDto.getTitle())
-                            .url(requestDto.getUrl())
-                            .position(totalLinks + 1)
-                            .isActive(requestDto.getIsActive())
-                            .createdAt(LocalDateTime.now())
-                            .build();
-                    return linkRepository.save(newLinkEntity);
-                });
-
-         */
     }
 
     @Override
@@ -102,5 +92,44 @@ public class LinkServiceImpl implements LinkService {
                                 )
                 ).then()
                 .doOnSuccess(unused -> log.info("Fin del método deleteLinkAndReorder"));
+    }
+
+    @Override
+    public Mono<GenericResponseDto<UpdateLinkResponseDto>> updateLinkByIdAndUsername(
+            String token, Integer linkId, UpdateLinkRequestDto requestDto
+    ) {
+        log.info("Inicio del método updateLinkByIdAndUsername");
+        String username = jwtProvider.getUsernameFromToken(token);
+        return linkRepository.findLinkByUsernameAndId(username, linkId)
+                .flatMap(existingLinkEntity -> updateLinkEntity(existingLinkEntity, requestDto))
+                .map(linkEntity ->
+                        ApiResponse.success(linkMapper.linkEntityToUpdateLinkResponseDto(linkEntity)))
+                .doOnSuccess((user) ->
+                        log.info("Fin del método updateLinkByIdAndUsername"));
+    }
+
+    private Mono<LinkEntity> updateLinkEntity(LinkEntity existingLinkEntity, UpdateLinkRequestDto requestDto) {
+        log.info("Incio de método updateLinkEntity");
+        Optional.ofNullable(requestDto.getTitle())
+                .ifPresent(existingLinkEntity::setTitle);
+
+        Optional.ofNullable(requestDto.getUrl())
+                .ifPresent(urlUdapte -> {
+                    existingLinkEntity.setUrl(urlUdapte);
+                    existingLinkEntity.setTypeIcon(LinkIconResolver.resolveIcon(urlUdapte));
+                });
+
+        Optional.ofNullable(requestDto.getPosition())
+                .ifPresent(existingLinkEntity::setPosition);
+
+        Optional.ofNullable(requestDto.getIsActive())
+                .ifPresent(existingLinkEntity::setIsActive);
+
+        return linkRepository.save(existingLinkEntity)
+                .as(transactionalOperator::transactional)
+                .doOnError(throwable ->
+                        log.error("Error en método updateLinkEntity {}", throwable.getMessage()))
+                .doOnSuccess((user) ->
+                        log.info("Fin del método updateLinkEntity"));
     }
 }

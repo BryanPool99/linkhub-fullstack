@@ -1,9 +1,11 @@
 package com.bryandev.linkhub.controller.admin;
 
 import com.bryandev.linkhub.model.dto.request.CreateLinkRequestDto;
+import com.bryandev.linkhub.model.dto.request.UpdateLinkRequestDto;
 import com.bryandev.linkhub.model.dto.response.CreateLinkResponseDto;
 import com.bryandev.linkhub.model.dto.response.GenericResponseDto;
 import com.bryandev.linkhub.model.dto.response.LinkDto;
+import com.bryandev.linkhub.model.dto.response.UpdateLinkResponseDto;
 import com.bryandev.linkhub.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +50,15 @@ public class LinkController {
             @PathVariable Integer linkId
     ) {
         String token = authorizationHeader.substring(7);
-        return linkService.deleteLinkAndReorder(linkId,token);
+        return linkService.deleteLinkAndReorder(linkId, token);
+    }
+
+    @PatchMapping("/{linkId}")
+    public Mono<GenericResponseDto<UpdateLinkResponseDto>> updateLinkByLinkIdAndUsername(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @PathVariable Integer linkId, @RequestBody UpdateLinkRequestDto updateRequest
+    ) {
+        String token = authorizationHeader.substring(7);
+        return linkService.updateLinkByIdAndUsername(token,linkId,updateRequest);
     }
 }

@@ -38,4 +38,12 @@ public interface LinkRepository extends R2dbcRepository<LinkEntity,Integer> {
             where u.username = :nameUser and l.id = :linkId
             """)
     Mono<Integer> findPositionByLinkIdAndUsername(Integer linkId,String nameUser);
+
+    @Query(value = """
+            select l.*
+            from links l
+            inner join users u on u.id = l.user_id
+            where u.username = :nameUser and l.id = :linkId
+           """)
+    Mono<LinkEntity> findLinkByUsernameAndId(String nameUser,Integer linkId);
 }
