@@ -1,1 +1,28 @@
-<p>dashboard works!</p>
+<main>
+    <section class="section-links">
+        <header>
+            <h1>Manage Link</h1>
+            <p>Create, edit, delete and reorder your profile links</p>
+        </header>
+        <app-custom-btn
+            [isOnlyIcon]="false"
+            backgroundColor="#5B13EC"
+            color="#fff"
+            fontSize="18px"
+            width="100%"
+            label="Add new Link"
+            directionIcon="left"
+            iconSrc="ionAddSharp"
+            borderRadius="12px"
+            borderWidth="0px"
+            padding="14px"
+            (onClick)="addLink()"
+        />
+        <section class="container-links">
+            @for (item of data; track $index) {
+                <app-container-data-link/>
+            }
+        </section>
+    </section>
+    <aside class="section-preview">vista previa</aside>
+</main>

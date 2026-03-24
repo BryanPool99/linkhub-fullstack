@@ -1,0 +1,41 @@
+@use '_variables' as v;
+
+.container-data-link {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: v.$bg-container-data-link;
+  border: 1px solid v.$border-color-data-link;
+  border-radius: 12px;
+  ng-icon{
+    color: #475569;
+  }
+  .container-info-link {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    h2.link-title{
+        color: v.$text-secondary;
+        font-size: 16px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    p.link-url{
+        color: v.$text-primary;
+        font-size: 14px;
+    }
+  }
+  .container-btn-actions{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    mat-slide-toggle{
+        /*agregar estilos personalizados*/
+        
+    }
+  }
+}

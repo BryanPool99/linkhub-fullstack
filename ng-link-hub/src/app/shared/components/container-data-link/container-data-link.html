@@ -1,0 +1,32 @@
+<div class="container-data-link">
+  <ng-icon name="ionReorderFourOutline"/>
+  <div class="container-info-link">
+    <h2 class="link-title">
+      Mi titulo de link
+      <span>
+        <app-custom-btn
+          [isOnlyIcon]="true"
+          iconSrc="ionPencilSharp"
+          backgroundColor="transparent"
+          color="#94A3B8"
+          fontSize="16px"
+          width="1rem"
+          borderWidth="0px"
+        />
+      </span>
+    </h2>
+    <p class="link-url">Mi url de link</p>
+  </div>
+  <div class="container-btn-actions">
+    <mat-slide-toggle></mat-slide-toggle>
+    <app-custom-btn
+      [isOnlyIcon]="true"
+      iconSrc="ionTrashSharp"
+      backgroundColor="transparent"
+      color="#94A3B8"
+      fontSize="16px"
+      width="1rem"
+      borderWidth="0px"
+    />
+  </div>
+</div>

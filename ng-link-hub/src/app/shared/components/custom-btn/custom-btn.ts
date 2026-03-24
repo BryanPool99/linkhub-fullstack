@@ -1,9 +1,9 @@
 import { Component, input, output } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { NgIcon } from '@ng-icons/core';
 @Component({
   selector: 'app-custom-btn',
-  imports: [MatIconModule,NgIcon],
+  imports: [MatIconModule, NgIcon],
   templateUrl: './custom-btn.html',
   styleUrl: './custom-btn.scss',
 })
@@ -17,7 +17,7 @@ export class CustomBtn {
   backgroundColor = input.required<string>();
   color = input.required<string>();
 
-  fontSize = input.required<string>();//tanto para el icono como para el texto
+  fontSize = input.required<string>(); //tanto para el icono como para el texto
   width = input.required<string>();
 
   borderRadius = input<string>('');
@@ -31,8 +31,8 @@ export class CustomBtn {
   onClick = output<void>();
   //metodos
   handleBtnClick() {
-  if (!this.disabled()) {
-    this.onClick.emit();
+    if (!this.disabled()) {
+      this.onClick.emit();
+    }
   }
-}
 }
