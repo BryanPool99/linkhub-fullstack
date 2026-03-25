@@ -2,7 +2,7 @@
   <ng-icon name="ionReorderFourOutline"/>
   <div class="container-info-link">
     <h2 class="link-title">
-      Mi titulo de link
+      {{dataLink().title}}
       <span>
         <app-custom-btn
           [isOnlyIcon]="true"
@@ -15,10 +15,11 @@
         />
       </span>
     </h2>
-    <p class="link-url">Mi url de link</p>
+    <p class="link-url">{{dataLink().url}}</p>
   </div>
   <div class="container-btn-actions">
-    <mat-slide-toggle></mat-slide-toggle>
+    <!-- <p>es activo: {{dataLink().isactive}}</p> -->
+    <mat-slide-toggle [checked]="dataLink().isactive"></mat-slide-toggle>
     <app-custom-btn
       [isOnlyIcon]="true"
       iconSrc="ionTrashSharp"
