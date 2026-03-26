@@ -3,10 +3,7 @@ package com.bryandev.linkhub.service.impl;
 import com.bryandev.linkhub.mapper.LinkMapper;
 import com.bryandev.linkhub.model.dto.request.CreateLinkRequestDto;
 import com.bryandev.linkhub.model.dto.request.UpdateLinkRequestDto;
-import com.bryandev.linkhub.model.dto.response.CreateLinkResponseDto;
-import com.bryandev.linkhub.model.dto.response.GenericResponseDto;
-import com.bryandev.linkhub.model.dto.response.LinkDto;
-import com.bryandev.linkhub.model.dto.response.UpdateLinkResponseDto;
+import com.bryandev.linkhub.model.dto.response.*;
 import com.bryandev.linkhub.model.entitIes.LinkEntity;
 import com.bryandev.linkhub.repository.LinkRepository;
 import com.bryandev.linkhub.repository.UserRepository;
@@ -131,5 +128,26 @@ public class LinkServiceImpl implements LinkService {
                         log.error("Error en método updateLinkEntity {}", throwable.getMessage()))
                 .doOnSuccess((user) ->
                         log.info("Fin del método updateLinkEntity"));
+    }
+
+    @Override
+    public Mono<GenericResponseDto<PreviewDataDto>> getPreviewDataByUsername(String token) {
+        log.info("Inicio del método getPreviewDataByUsername");
+        String username = jwtProvider.getUsernameFromToken(token);
+        return Mono.zip(
+                        userRepository.findByUsername(username),
+                        linkRepository.findLinksDtoByUsernameAndStateActive(username).collectList()
+                ).map(tuple2 -> {
+                    var previewDataDtoBuilder = PreviewDataDto
+                            .builder()
+                            .pictureUrl(tuple2.getT1().getProfilePictureUrl())
+                            .username(tuple2.getT1().getUsername())
+                            .description(tuple2.getT1().getBio())
+                            .links(tuple2.getT2())
+                            .build();
+                    return ApiResponse.success(previewDataDtoBuilder);
+                })
+                .doOnError((er) -> log.error("Hubo un error debido a :{}", er.getMessage()))
+                .doOnSuccess((v) -> log.info("Informacion lisatda correctamente"));
     }
 }

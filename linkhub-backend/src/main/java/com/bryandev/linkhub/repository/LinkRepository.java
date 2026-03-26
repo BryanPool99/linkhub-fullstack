@@ -19,6 +19,16 @@ public interface LinkRepository extends R2dbcRepository<LinkEntity,Integer> {
     Flux<LinkDto> findLinksDtoByUsername(String nameUser);
 
     @Query(value = """
+            select
+                l.id as id,l.title as title,
+                l.url as url,l.is_active as isactive
+            from links l
+            inner join users u on u.id = l.user_id
+            where u.username = :nameUser and l.is_active is TRUE
+            """)
+    Flux<LinkDto> findLinksDtoByUsernameAndStateActive(String nameUser);
+
+    @Query(value = """
             select count(l.id) as total from links l
             inner join users u on u.id = l.user_id
             where u.username = :nameUser
