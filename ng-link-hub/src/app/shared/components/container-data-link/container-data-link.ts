@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { ionPencilSharp, ionReorderFourOutline, ionTrashSharp } from '@ng-icons/ionicons';
@@ -14,4 +14,11 @@ import { LinkDto } from '../../interfaces/link.interface';
 })
 export class ContainerDataLink {
     dataLink = input.required<LinkDto>();
+
+    onUpdate = output<LinkDto>();
+
+    toogleActive(checked: boolean) {
+      const updatedLik = {...this.dataLink(), isactive: checked};
+      this.onUpdate.emit(updatedLik);
+    }
 }

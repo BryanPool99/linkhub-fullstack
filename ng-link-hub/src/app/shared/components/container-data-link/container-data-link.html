@@ -1,8 +1,8 @@
 <div class="container-data-link">
-  <ng-icon name="ionReorderFourOutline"/>
+  <ng-icon name="ionReorderFourOutline" />
   <div class="container-info-link">
     <h2 class="link-title">
-      {{dataLink().title}}
+      {{ dataLink().title }}
       <span>
         <app-custom-btn
           [isOnlyIcon]="true"
@@ -15,11 +15,14 @@
         />
       </span>
     </h2>
-    <p class="link-url">{{dataLink().url}}</p>
+    <p class="link-url">{{ dataLink().url }}</p>
   </div>
   <div class="container-btn-actions">
     <!-- <p>es activo: {{dataLink().isactive}}</p> -->
-    <mat-slide-toggle [checked]="dataLink().isactive"></mat-slide-toggle>
+    <mat-slide-toggle
+      [checked]="dataLink().isactive"
+      (change)="toogleActive($event.checked)"
+    ></mat-slide-toggle>
     <app-custom-btn
       [isOnlyIcon]="true"
       iconSrc="ionTrashSharp"

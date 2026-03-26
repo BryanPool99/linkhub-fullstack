@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.interface';
-import { LinkDto } from '../../../shared/interfaces/link.interface';
+import { LinkDto, PreviewDataDto } from '../../../shared/interfaces/link.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +14,9 @@ export class LinkService {
 
   getLinksByUsername(): Observable<GenericResponseDto<LinkDto[]>> {
     return this._httpClient.get<GenericResponseDto<LinkDto[]>>(`${this.apiLinkBase}/findAll`);
+  }
+
+  getPreviewDataByUsername():Observable<GenericResponseDto<PreviewDataDto>>{
+    return this._httpClient.get<GenericResponseDto<PreviewDataDto>>(`${this.apiLinkBase}/previewData`);
   }
 }

@@ -4,3 +4,10 @@ export interface LinkDto {
   url: string;
   isactive: boolean;
 }
+
+export interface PreviewDataDto{
+  pictureUrl: string;
+  username: string;
+  description: string;
+  links: LinkDto[]
+}

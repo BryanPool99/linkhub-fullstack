@@ -19,16 +19,41 @@
       (onClick)="addLink()"
     />
     <section class="container-links">
-      @if (loading()) {
+      @if (loadingLinksSignal()) {
         <p>Cargando...</p>
-      } @else if (error()) {
+      } @else if (errorLinksSignal()) {
         <p>Error al obtener los links</p>
       } @else {
-        @for (item of dataLinks(); track $index) {
-          <app-container-data-link [dataLink]="item" />
+        @for (item of dataLinks(); track item.id) {
+          <app-container-data-link [dataLink]="item" (onUpdate)="updateLinkInState($event)"/>
         }
       }
     </section>
   </section>
-  <aside class="section-preview">vista previa</aside>
+  <aside class="section-preview">
+    <header>
+      <h1>Preview</h1>
+      <p>Preview of your profile</p>
+    </header>
+    <section class="container-preview">
+      @if (loadingPreviewSignal()) {
+        <p>Cargando...</p>
+      } @else if (errorPreviewSignal()) {
+        <p>Error al obtener la informacion de preview</p>
+      } @else {
+        <figure>
+          <img [src]="dataPreview()?.pictureUrl" alt="profile-user">
+        </figure>
+        <h3>{{dataPreview()?.username}}</h3>
+        <p>{{dataPreview()?.description}}</p>
+        <ul>
+          @for (item of dataPreview()?.links; track item.id) {
+            <li>
+              <a href="{{item.url}}">{{item.title}}</a>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </aside>
 </main>
