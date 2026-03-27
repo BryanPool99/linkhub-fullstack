@@ -6,6 +6,8 @@ import { ContainerDataLink } from '../../../shared/components/container-data-lin
 import { LinkService } from '../../../core/services/linkservice/link.service';
 import { LinkDto, PreviewDataDto } from '../../../shared/interfaces/link.interface';
 import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AddAndEditLinkDialog } from '../../../shared/components/modals/add-and-edit-link-dialog/add-and-edit-link-dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,7 @@ import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.inter
 })
 export class Dashboard {
   private _linkService = inject(LinkService);
+  private _dialog = inject(MatDialog);
   //variable -> signal<TIPO>(EL VALOR INICIAL)
   //UPDATE Y SET
   loadingLinksSignal = signal<boolean>(false);
@@ -97,15 +100,33 @@ export class Dashboard {
     });
   }
 
-  addLink() {
-    console.log('add link');
-    alert('add link');
-  }
-
   updateLinkInState(updateLink: LinkDto) {
+    console.log('update link', updateLink);
     this.linksSignal.update((links) =>
       // .map crea un nuevo array, y { ...updateLink } crea una nueva referencia del objeto
       links.map((link) => (link.id === updateLink.id ? { ...updateLink } : link)),
     );
+  }
+
+  deleteLinkInState(id: number) {
+    console.log('Delete link in state con id:', id);
+    this.linksSignal.update((links) => links.filter((link) => link.id !== id));
+  }
+
+  openAddDialog() {
+    console.log('abriendo add dialog');
+    const dialogAddRef = this._dialog.open(AddAndEditLinkDialog, {
+      width: '400px',
+      autoFocus: false,
+    });
+    dialogAddRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Agregar link con result', result);
+        //se hace asi para que no salga error
+        // Creamos un ID temporal basado en el timestamp para que sea único
+        const tempLink = { ...result, id: Date.now() };
+        this.linksSignal.update((links) => [...links, tempLink]);
+      }
+    });
   }
 }

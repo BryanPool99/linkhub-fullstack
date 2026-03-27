@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{ data ? 'Editar link' : 'Agregar link' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="linkForm" class="example-form">
+    <app-container-custom-input
+      [existLabel]="true"
+      textLabel="Título del link"
+      idInput="title"
+      [requiredInput]="true"
+      [isVisibleMessage]="false"
+      [isWithIcon]="false"
+      [disabledInput]="false"
+      [requiredInput]="true"
+      [value]="linkForm.get('title')?.value || ''"
+      (valueChange)="
+        linkForm.get('title')?.setValue($event); linkForm.get('title')?.markAsTouched()
+      "
+      [controlInvalid]="linkForm.get('title')?.invalid || false"
+      [controlTouched]="linkForm.get('title')?.touched || false"
+      [textMessage]="getErrorMessage('title')"
+    />
+
+    <app-container-custom-input
+      [existLabel]="true"
+      textLabel="Url del link"
+      idInput="url"
+      [requiredInput]="true"
+      [isVisibleMessage]="false"
+      [isWithIcon]="false"
+      [disabledInput]="false"
+      [requiredInput]="true"
+      [value]="linkForm.get('url')?.value || ''"
+      (valueChange)="linkForm.get('url')?.setValue($event); linkForm.get('url')?.markAsTouched()"
+      [controlInvalid]="linkForm.get('url')?.invalid || false"
+      [controlTouched]="linkForm.get('url')?.touched || false"
+      [textMessage]="getErrorMessage('url')"
+    />
+
+    <div class="toggle-container">
+      <label>Activo</label>
+      <mat-slide-toggle formControlName="isactive"></mat-slide-toggle>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="onSave()" [disabled]="linkForm.invalid">
+    {{ data ? 'Actualizar' : 'Guardar' }}
+  </button>
+</mat-dialog-actions>

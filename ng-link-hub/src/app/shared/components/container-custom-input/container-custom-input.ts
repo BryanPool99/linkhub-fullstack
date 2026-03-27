@@ -34,6 +34,7 @@ export class ContainerCustomInput {
   requiredInput = input.required<boolean>();
   controlInvalid = input<boolean>(false);
   controlTouched = input<boolean>(false);
+  value = input<string | null>(null);
 
   isPasswordVisible = signal<boolean>(false);
   typeInputSignal = signal<string>('password');

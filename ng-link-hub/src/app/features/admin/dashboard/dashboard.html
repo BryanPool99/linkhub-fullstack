@@ -16,7 +16,7 @@
       borderRadius="12px"
       borderWidth="0px"
       padding="14px"
-      (onClick)="addLink()"
+      (onClick)="openAddDialog()"
     />
     <section class="container-links">
       @if (loadingLinksSignal()) {
@@ -24,8 +24,12 @@
       } @else if (errorLinksSignal()) {
         <p>Error al obtener los links</p>
       } @else {
-        @for (item of dataLinks(); track item.id) {
-          <app-container-data-link [dataLink]="item" (onUpdate)="updateLinkInState($event)"/>
+        @for (item of dataLinks(); track item.id || $index) {
+          <app-container-data-link 
+          [dataLink]="item" 
+          (onUpdate)="updateLinkInState($event)"
+          (onDeleteLinkId)="deleteLinkInState($event)"
+           />
         }
       }
     </section>
@@ -42,14 +46,14 @@
         <p>Error al obtener la informacion de preview</p>
       } @else {
         <figure>
-          <img [src]="dataPreview()?.pictureUrl" alt="profile-user">
+          <img [src]="dataPreview()?.pictureUrl" alt="profile-user" />
         </figure>
-        <h3>{{dataPreview()?.username}}</h3>
-        <p>{{dataPreview()?.description}}</p>
+        <h3>{{ dataPreview()?.username }}</h3>
+        <p>{{ dataPreview()?.description }}</p>
         <ul>
           @for (item of dataPreview()?.links; track item.id) {
             <li>
-              <a href="{{item.url}}">{{item.title}}</a>
+              <a href="{{ item.url }}">{{ item.title }}</a>
             </li>
           }
         </ul>

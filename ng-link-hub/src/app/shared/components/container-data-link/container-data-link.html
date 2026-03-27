@@ -12,6 +12,7 @@
           fontSize="16px"
           width="1rem"
           borderWidth="0px"
+          (onClick)="openEditDialog(dataLink())"
         />
       </span>
     </h2>
@@ -31,6 +32,7 @@
       fontSize="16px"
       width="1rem"
       borderWidth="0px"
+      (onClick)="openConfirmDialog(dataLink().id)"
     />
   </div>
 </div>
