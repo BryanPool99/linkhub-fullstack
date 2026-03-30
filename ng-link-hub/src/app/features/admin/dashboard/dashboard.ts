@@ -6,6 +6,8 @@ import { ContainerDataLink } from '../../../shared/components/container-data-lin
 import { LinkService } from '../../../core/services/linkservice/link.service';
 import { LinkDto, PreviewDataDto } from '../../../shared/interfaces/link.interface';
 import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditDialog } from '../../../shared/components/modals/add-edit-dialog/add-edit-dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,7 @@ import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.inter
 })
 export class Dashboard {
   private _linkService = inject(LinkService);
+  readonly dialog = inject(MatDialog);
   //variable -> signal<TIPO>(EL VALOR INICIAL)
   //UPDATE Y SET
   loadingLinksSignal = signal<boolean>(false);
@@ -97,9 +100,18 @@ export class Dashboard {
     });
   }
 
-  addLink() {
+  openAddLink() {
     console.log('add link');
-    alert('add link');
+    const dialogRef = this.dialog.open(AddEditDialog, {
+      width: '500px',
+    });
+    dialogRef.afterClosed().subscribe( (result) => {
+      if(result){
+        console.log('result luego de agregar en el formulario', result);
+        const tmpLink = { ...result, id: Date.now() };
+        this.linksSignal.update((links) => [...links, tmpLink]);
+      }
+    })
   }
 
   updateLinkInState(updateLink: LinkDto) {
@@ -107,5 +119,10 @@ export class Dashboard {
       // .map crea un nuevo array, y { ...updateLink } crea una nueva referencia del objeto
       links.map((link) => (link.id === updateLink.id ? { ...updateLink } : link)),
     );
+  }
+
+  deleteLinkInState(linkId: number) {
+    console.log('deleteLinkInState desde el dashboard con id :', linkId);
+    this.linksSignal.update((links) => links.filter((link) => link.id !== linkId));
   }
 }
