@@ -11,3 +11,36 @@ export interface PreviewDataDto{
   description: string;
   links: LinkDto[]
 }
+
+export interface CreateLinkRequestDto{
+  title: string;
+  url: string;
+  isActive: boolean;
+}
+
+export interface CreateLinkResponseDto{
+  id: number;
+  userId: number;
+  title: string;
+  url: string;
+  iconType: string;
+  position: number;
+  isActive: boolean;
+}
+
+export interface UpdateLinkRequestDto{
+  title?: string;
+  url?: string;
+  position?: number;
+  isActive?: boolean;
+}
+
+export interface UpdateLinkResponseDto{
+  id: number;
+  userId: number;
+  title: string;
+  url: string;
+  iconType: string;
+  position: number;
+  isActive: boolean;
+}

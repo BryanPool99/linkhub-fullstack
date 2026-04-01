@@ -4,11 +4,22 @@ import { provideIcons } from '@ng-icons/core';
 import { ionAddSharp } from '@ng-icons/ionicons';
 import { ContainerDataLink } from '../../../shared/components/container-data-link/container-data-link';
 import { LinkService } from '../../../core/services/linkservice/link.service';
-import { LinkDto, PreviewDataDto } from '../../../shared/interfaces/link.interface';
+import {
+  CreateLinkRequestDto,
+  CreateLinkResponseDto,
+  LinkDto,
+  PreviewDataDto,
+  UpdateLinkRequestDto,
+  UpdateLinkResponseDto,
+} from '../../../shared/interfaces/link.interface';
 import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditDialog } from '../../../shared/components/modals/add-edit-dialog/add-edit-dialog';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-dashboard',
   imports: [CustomBtn, ContainerDataLink],
@@ -19,6 +30,7 @@ import { AddEditDialog } from '../../../shared/components/modals/add-edit-dialog
 export class Dashboard {
   private _linkService = inject(LinkService);
   readonly dialog = inject(MatDialog);
+  private _snackBar = inject(MatSnackBar);
   //variable -> signal<TIPO>(EL VALOR INICIAL)
   //UPDATE Y SET
   loadingLinksSignal = signal<boolean>(false);
@@ -105,24 +117,85 @@ export class Dashboard {
     const dialogRef = this.dialog.open(AddEditDialog, {
       width: '500px',
     });
-    dialogRef.afterClosed().subscribe( (result) => {
-      if(result){
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         console.log('result luego de agregar en el formulario', result);
         const tmpLink = { ...result, id: Date.now() };
         this.linksSignal.update((links) => [...links, tmpLink]);
+        const request: CreateLinkRequestDto = {
+          title: result.title,
+          url: result.url,
+          isActive: result.isactive,
+        };
+        this._linkService.addNewLink(request).subscribe({
+          next: (response: GenericResponseDto<CreateLinkResponseDto>) => {
+            console.log('Response de API', response);
+            if (response.result) {
+              this._snackBar.open('Se agrego el link con exito', 'Cerrar', {
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                duration: 3000,
+              });
+              this.loadLinks();
+            }
+          },
+          error: (error) => {
+            console.log('Error al agregar el link', error);
+          },
+        });
       }
-    })
+    });
   }
 
   updateLinkInState(updateLink: LinkDto) {
+    console.log('updateLinkInState desde el dashboard con id :', updateLink.id);
     this.linksSignal.update((links) =>
       // .map crea un nuevo array, y { ...updateLink } crea una nueva referencia del objeto
       links.map((link) => (link.id === updateLink.id ? { ...updateLink } : link)),
     );
+    const updatedRequest:UpdateLinkRequestDto ={
+      title: updateLink.title,
+      url: updateLink.url,
+      isActive: updateLink.isactive
+    }
+    this._linkService.updateLink(updateLink.id,updatedRequest).subscribe({
+      next: (resp:GenericResponseDto<UpdateLinkResponseDto>) => {
+        if(resp.result){
+          this._snackBar.open('Se actualizo el link con exito', 'Cerrar', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 3000,
+          });
+          //this.loadLinks();
+        }
+      },
+      error: (error) => {
+        console.log('Error al actualizar el link', error);
+        this._snackBar.open('Error al actualizar el link', 'Cerrar', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 3000,
+          });
+        this.loadLinks();
+      },
+    })
   }
 
   deleteLinkInState(linkId: number) {
     console.log('deleteLinkInState desde el dashboard con id :', linkId);
     this.linksSignal.update((links) => links.filter((link) => link.id !== linkId));
+    this._linkService.deleteLink(linkId).subscribe({
+      next: () => {
+        this._snackBar.open('Se elimino el link con exito', 'Cerrar', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+        this.loadLinks();
+      },
+      error: (error) => {
+        console.log('Error al eliminar el link', error);
+      },
+    });
   }
 }
