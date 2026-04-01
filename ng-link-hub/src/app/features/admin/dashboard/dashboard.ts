@@ -4,10 +4,11 @@ import { provideIcons } from '@ng-icons/core';
 import { ionAddSharp } from '@ng-icons/ionicons';
 import { ContainerDataLink } from '../../../shared/components/container-data-link/container-data-link';
 import { LinkService } from '../../../core/services/linkservice/link.service';
-import { LinkDto, PreviewDataDto } from '../../../shared/interfaces/link.interface';
+import { CreateLinkRequestDto, LinkDto, PreviewDataDto, UpdateLinkRequestDto } from '../../../shared/interfaces/link.interface';
 import { GenericResponseDto } from '../../../shared/interfaces/apiResponse.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditDialog } from '../../../shared/components/modals/add-edit-dialog/add-edit-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,7 @@ import { AddEditDialog } from '../../../shared/components/modals/add-edit-dialog
 export class Dashboard {
   private _linkService = inject(LinkService);
   readonly dialog = inject(MatDialog);
+  private _snackBar = inject(MatSnackBar);
   //variable -> signal<TIPO>(EL VALOR INICIAL)
   //UPDATE Y SET
   loadingLinksSignal = signal<boolean>(false);
@@ -105,24 +107,86 @@ export class Dashboard {
     const dialogRef = this.dialog.open(AddEditDialog, {
       width: '500px',
     });
-    dialogRef.afterClosed().subscribe( (result) => {
-      if(result){
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         console.log('result luego de agregar en el formulario', result);
         const tmpLink = { ...result, id: Date.now() };
         this.linksSignal.update((links) => [...links, tmpLink]);
+        const request:CreateLinkRequestDto = {
+          title:result.title,
+          url:result.url,
+          isActive:result.isactive
+        };
+        this._linkService.createLink(request).subscribe({
+          next: (response) => {
+            if(response.result){
+              this._snackBar.open('Se creo el link correctamente', 'Cerrar', {
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                duration: 3000,
+              });
+              this.loadLinks();
+            }
+          },
+          error: (error) => {
+            console.log('error al crear el link', error);
+          },
+        })
       }
-    })
+    });
   }
 
   updateLinkInState(updateLink: LinkDto) {
+    console.log('updateLinkInState desde el dashboard con id :', updateLink.id);
     this.linksSignal.update((links) =>
       // .map crea un nuevo array, y { ...updateLink } crea una nueva referencia del objeto
       links.map((link) => (link.id === updateLink.id ? { ...updateLink } : link)),
     );
+    const updateRequest:UpdateLinkRequestDto = {
+      title:updateLink.title,
+      url:updateLink.url,
+      isActive:updateLink.isactive
+    };
+    this._linkService.updateLinkByLinkId(updateLink.id,updateRequest).subscribe({
+      next: (response) => {
+        console.log('response al actualizar el link', response);
+        this._snackBar.open('Se actualizo el link correctamente', 'Cerrar', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+      },
+      error: (error) => {
+        console.log('error al actualizar el link', error);
+        this._snackBar.open('Hubo un error al actualizar el link', 'Cerrar', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+      },
+    })
   }
 
   deleteLinkInState(linkId: number) {
     console.log('deleteLinkInState desde el dashboard con id :', linkId);
     this.linksSignal.update((links) => links.filter((link) => link.id !== linkId));
+    this._linkService.deleteLinkById(linkId).subscribe({
+      next: (response) => {
+        //console.log('response al eliminar el link', response);
+        this._snackBar.open('Se elimino el link correctamente', 'Cerrar', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+      },
+      error: (error) => {
+        console.log('error al eliminar el link', error);
+        this._snackBar.open('Hubo un error al eliminar el link', 'Cerrar', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3000,
+        });
+      },
+    });
   }
 }
