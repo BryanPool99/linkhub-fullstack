@@ -5,6 +5,7 @@ import com.bryandev.linkhub.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -27,27 +28,26 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     /*
-    @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
-        return httpSecurity
-                .csrf(csrfSpec -> csrfSpec.disable())
-                .authorizeExchange(auth -> auth
-                        .pathMatchers("/public/**").permitAll()
-                        .pathMatchers("/admin/**").hasRole("ADMIN")
-                        .anyExchange().authenticated()
-                )
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
-                .build();
-    }
-    */
-
+        @Bean
+        public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
+            return httpSecurity
+                    .csrf(csrfSpec -> csrfSpec.disable())
+                    .authorizeExchange(auth -> auth
+                            .pathMatchers("/public/**").permitAll()
+                            .pathMatchers("/admin/**").hasRole("ADMIN")
+                            .anyExchange().authenticated()
+                    )
+                    .httpBasic(Customizer.withDefaults())
+                    .formLogin(Customizer.withDefaults())
+                    .build();
+        }
+        */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(auth -> auth
-                        .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
+                        .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .pathMatchers("/public/**").permitAll()
                         .pathMatchers("/auth/**").permitAll()
                         //.pathMatchers("/admin/link/findAll").permitAll()
@@ -77,7 +77,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
         // Agrega "Authorization" explícitamente
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -86,4 +86,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration); // Aplica a todas las rutas
         return source;
     }
+
 }
