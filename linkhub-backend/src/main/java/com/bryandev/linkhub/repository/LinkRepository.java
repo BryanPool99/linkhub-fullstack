@@ -56,4 +56,6 @@ public interface LinkRepository extends R2dbcRepository<LinkEntity,Integer> {
             where u.username = :nameUser and l.id = :linkId
            """)
     Mono<LinkEntity> findLinkByUsernameAndId(String nameUser,Integer linkId);
+
+    Flux<LinkEntity> findByUserIdAndIsActiveTrue(Integer userId);
 }
