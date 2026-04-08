@@ -52,7 +52,7 @@ export const routes: Routes = [
         ]
     },
     {
-        path: 'public-profle',
+        path: 'public-profle/:username',
         loadComponent: () => import('./features/public-profile/public-profile').then((m) => m.PublicProfile),
     },
     {

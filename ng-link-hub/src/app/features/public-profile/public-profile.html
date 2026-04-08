@@ -1,1 +1,31 @@
-<p>public-profile works!</p>
+@if (!loading()) {
+  <section class="profile-card">
+    <aside class="profile-card__user-info">
+      <figure class="profile-card__avatar-container">
+        <img [src]="dataPublicProfile.urlImg" alt="avatar-user" class="profile-card__avatar" />
+      </figure>
+      <div class="profile-card__details">
+        <h1 class="profile-card__username">@ {{ dataPublicProfile.username }}</h1>
+        <h2 class="profile-card__title">{{ dataPublicProfile.title }}</h2>
+        <p class="profile-card__bio">{{ dataPublicProfile.bio }}</p>
+      </div>
+    </aside>
+
+    <aside class="profile-card__links">
+      @for (item of dataPublicProfile.links; track $index) {
+        <a
+          [href]="item.url"
+          target="_blank"
+          class="profile-card__link"
+          [style.background]="dataPublicProfile.themeColor"
+          [style.borderColor]="dataPublicProfile.themeColor"
+        >
+          <ng-icon [name]="item.iconType" class="profile-card__icon" />
+          <span class="profile-card__link-text">{{ item.title }}</span>
+        </a>
+      }
+    </aside>
+  </section>
+} @else {
+  <mat-spinner></mat-spinner>
+}

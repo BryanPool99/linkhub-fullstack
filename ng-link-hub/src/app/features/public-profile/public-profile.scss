@@ -1,0 +1,80 @@
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: transparent;
+
+    // Elemento: Contenedor de info (aside 1)
+    &__user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    // Elemento: Avatar
+    &__avatar-container {
+        width: 80px;
+        height: 80px;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 2px solid black;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+        .profile-card__avatar {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    // Elemento: Textos
+    &__details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__username { font-size: 1.2rem; font-weight: bold; }
+    &__title { font-size: 1rem; color: #666; }
+    &__bio { font-size: 0.9rem; margin-top: 0.5rem; }
+
+    // Elemento: Contenedor de links (aside 2)
+    &__links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+        // Modificador: Por si quieres resaltar un link específico
+        &--active {
+            color: #dd0031!important; // Color Angular por ejemplo
+            font-weight: bold;
+        }
+
+        &:hover {
+           border-width: 5px!important;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)!important;
+           background-color: #dd0031!important;
+        }
+    }
+
+    &__icon {
+        margin-right: 0.5rem;
+        font-size: 1.5rem;
+    }
+}
